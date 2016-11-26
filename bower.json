@@ -1,0 +1,25 @@
+{
+  "name": "admindesroles",
+  "homepage": "https://github.com/lucienbertin/admindesroles",
+  "authors": [
+    "lucienbertin <me@lucienbertin.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lucca-ui": "^3.0.5",
+    "angular": "1.5"
+  },
+  "resolutions": {
+    "angular": "1.5"
+  }
+}

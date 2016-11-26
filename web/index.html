@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<!--[if lte IE 9 ]><html class="ie9"><![endif]-->
+<!--[if !(IE)]><!--><html><!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>Admin des roles</title>
+	<!-- <link rel="shortcut icon" href="/static/common/images/favicon.png"/> -->
+
+	<!-- This page !-->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://cdn.lucca.fr/lucca-ui/3/latest/lucca-ui.global.min.css"/>
+	<link rel="stylesheet" type="text/css" href="app.css"/>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+	<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.1.0/angularfire.js"></script> -->
+	
+	<script type="text/javascript" src="app.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body ng-app="adminApp">
+	<main class="lui fitting container">
+		<section class="lui column desktop-6 desktop-offset-3 dashboard" ng-controller="dashboardCtrl">
+			<header class="lui center aligned dashed divider">
+				<h3>Jours sans incidents sur l'admin des roles</h3>
+			</header>
+			<section class="lui tablet-6 column center aligned metric">
+				<h4>Record</h4>
+				<h1>13</h1>
+			</section>
+			<section class="lui tablet-6 column center aligned metric">
+				<h4>Actuel</h4>
+				<h1>0</h1>
+			</section>
+		</section>
+	</main>
+</body>
