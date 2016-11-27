@@ -1,8 +1,9 @@
 (function() {
 	"use strict";
-	angular.module("adminApp", []);
+	angular.module("adminApp", ["firebase"]);
+
 	angular.module("adminApp")
-	.controller("dashboardCtrl", function($scope, bugSrv) {
+	.controller("dashboardCtrl", function($scope, bugSrv, $firebaseAuth) {
 		$scope.record = 0;
 		$scope.current = 0;
 		$scope.pending = 0;
@@ -18,12 +19,13 @@
 			if ($scope.current > $scope.record) {
 				$scope.record = $scope.current;
 			}
+			$scope.$apply();
 		});
 
 		function getRecord(bugs) {
 
 			var buggyPeriods = mergeRanges(_.map(bugs, function(bug) {
-				return [bug.detected.toDate(), (bug.corrected || moment().startOf("day")).toDate()]
+				return [moment(bug.detected).startOf("day").toDate(), moment(bug.corrected).startOf("day").toDate()];
 			}));
 			var record = 0;
 			_.reduce(buggyPeriods, function(memo, p) {
@@ -34,31 +36,37 @@
 			return Math.floor(record);
 		}
 		function getPending(bugs) {
-			return _.where(bugs, { corrected: undefined }).length;
+			return _.filter(bugs, function(bug) { return !bug.corrected; }).length;
 		}
 		function getCurrent(bugs) {
-			// _.chain(bugs)
-			// .sortBy()
-			return 0;
+			var lastCorrection = _.chain(bugs)
+			.sortBy("corrected")
+			.last()
+			.value().corrected;
+			return Math.floor(moment.duration(moment().diff(lastCorrection)).asDays());
 		}
-	})
-	.service("bugSrv", function($q) {
+	});
+
+	angular.module("adminApp")
+	.service("bugSrv", function($q, $firebaseArray) {
 		function getbugs() {
-			var dfd = $q.defer();
-			dfd.resolve(spoofbugs);
-			return dfd.promise;
+			var bugs = firebase.database().ref("bugs");
+			return bugs.once("value")
+			.then(function(snapshot) {
+				return snapshot.val();
+			});
 		}
 		return {
 			getbugs: getbugs,
 		};
 	})
 
-
-	var spoofbugs = [
-		{ detected: moment("2016-10-01"), corrected: moment("2016-10-29"), },
-		{ detected: moment("2016-11-01"), corrected: moment("2016-11-01"), },
-		// { detected: moment("2016-11-14"), corrected: undefined, },
-	];
+	// var spoofbugs = [
+	// 	{ detected:"2016-10-01", corrected: "2016-10-29", },
+	// 	{ detected: "2016-11-01", corrected: "2016-11-01", },
+	// 	{ detected: "2016-11-14" },
+	// ];
+	// firebase.database().ref("bugs").set(spoofbugs);
 
 	// copy pasted from https://github.com/jwarby/merge-ranges/
 	function mergeRanges(ranges) {
