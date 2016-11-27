@@ -7,6 +7,7 @@
 		$scope.record = 0;
 		$scope.current = 0;
 		$scope.pending = 0;
+		$scope.loading = true;
 		bugSrv.getbugs()
 		.then(function(bugs) {
 			$scope.record = getRecord(bugs);
@@ -19,6 +20,7 @@
 			if ($scope.current > $scope.record) {
 				$scope.record = $scope.current;
 			}
+			$scope.loading = false;
 			$scope.$apply();
 		});
 

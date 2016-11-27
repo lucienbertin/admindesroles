@@ -17,18 +17,20 @@
 </head>
 <body ng-app="adminApp">
   <main class="lui fitting container">
-    <section class="lui column spaced desktop-6 desktop-offset-3">
-      <div class="dashboard lui container" ng-controller="dashboardCtrl">
+    <section class="lui column spaced desktop-8 desktop-offset-2 large-6 large-offset-3">
+      <div class="dashboard lui container raised" ng-controller="dashboardCtrl">
         <header class="lui center aligned dashed divider">
           <h3>Jours sans bugs sur l'admin des roles</h3>
         </header>
         <section class="lui tablet-6 column center aligned metric">
           <h4>Record</h4>
-          <h1>{{ record }}</h1>
+          <h1 ng-show="loading"><span class="lui loader"></span></h1>
+          <h1 ng-hide="loading">{{ record }}</h1>
         </section>
         <section class="lui tablet-6 column center aligned metric">
           <h4>Actuel</h4>
-          <h1>{{ current }}</h1>
+          <h1 ng-show="loading"><span class="lui loader"></span></h1>
+          <h1 ng-hide="loading">{{ current }}</h1>
           <p ng-show="!!pending">{{ pending }} bug(s) en cours</p>
         </section>
       </div>
